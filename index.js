@@ -9,10 +9,10 @@ client.on('ready', () => {
 });
 
 client.on('guildMemberAdd', member => {
-  const channel = member.guild.channels.find(ch => ch.name === 'presentaciones');
+  const channel = member.guild.channels.find(ch => ch.name === '👋-presentaciones');
   if (!channel) return;
   
-  let rulesChannel = member.guild.channels.find(channel => channel.name === "reglas").toString();
+  let rulesChannel = member.guild.channels.find(channel => channel.name === "📙-reglas").toString();
   
   const welcomeResponses = [
     `¡Hola, ${member}! 💕 Bienvenido al server. No olvides leer las ${rulesChannel}. 🙏`,
@@ -27,7 +27,7 @@ client.on('guildMemberAdd', member => {
 });
 
 client.on('message', async message => {
-  if (message.channel.name === 'recepción' && message.author.id !== '605780919995072524') {
+  if (message.channel.name === '💁♀-recepción' && message.author.id !== '605780919995072524') {
 
     let member = `<@${message.author.id}>`;
 
@@ -46,7 +46,11 @@ client.on('message', async message => {
     try {
       const fetched = await message.channel.fetchMessages();
       fetched.forEach(message => {
-        message.delete();
+        try {
+          message.delete();
+        } catch (error) {
+          console.log(error);
+        }
       })
     } catch (error) {
       console.log(error);
@@ -61,7 +65,7 @@ client.on('message', async message => {
     - El Dr. los irá pasando a la Sala de Espera y eventualmente los pasará a su consultorio. 🥰
     - Si son muchos pacientes, será difícil pasarlos a todos. Si en una sesión no logran entrar, vuélvanlo a intentar otro día. No lloren. 🙄
     
-    También contamos con un grupo de apoyo (${message.guild.channels.find(channel => channel.name === "deprimidos-anónimos").toString()}), en donde podrán compartir sus problemas y consejos con otros pacientes de manera abierta. ${message.guild.emojis.find(emoji => emoji.name === "hyped02")}`)
+    También contamos con un grupo de apoyo (${message.guild.channels.find(channel => channel.name === "👥-deprimidos-anónimos").toString()}), en donde podrán compartir sus problemas y consejos con otros pacientes de manera abierta. ${message.guild.emojis.find(emoji => emoji.name === "hyped02")}`)
   }
 
   if (message.content.toLowerCase() == '!reglas' && message.author.id === '119917959463436290') {
