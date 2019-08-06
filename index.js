@@ -1,11 +1,43 @@
 require('dotenv').config()
 
+const Twitch = require('./twitch');
 const Discord = require('discord.js');
 
 const client = new Discord.Client();
 
-client.on('ready', () => {
+client.on('ready', async () => {
   console.log('Estoy lista.');
+
+  let sendMessage = true;
+  const time = 25 * 6000;
+  const channel = client.channels.find(ch => ch.name === '🦜-cotorreo');
+
+  setInterval(async () => {
+    let streamStatus = await Twitch.checkStream('JuggerWicho115');
+    if (streamStatus == false && sendMessage == false) {
+      sendMessage = true;
+    }
+
+    if(streamStatus == true && sendMessage == true) {
+      channel.send("@everyone ¡Wicho inició stream! https://www.twitch.tv/JuggerWicho115");
+      sendMessage = false;
+    } 
+  }, time);
+  
+  setInterval(() => {
+    let fecha = new Date;
+    let sendMessage = true;
+    const channel = client.channels.find(ch => ch.name === '🦜-cotorreo');
+    
+    if (fecha.getDay() == 6 && sendMessage == false) {
+      sendMessage = true;
+    }
+
+    if (fecha.getDay() == 5 && sendMessage == true) {
+      channel.send(`@everyone ¡YA ES VIERNES DE AHORCAR RUCAS, MORROS! ${client.emojis.find(emoji => emoji.name === "spooky")}`);
+      sendMessage = false;
+    }
+  }, 6000);
 });
 
 client.on('guildMemberAdd', member => {
@@ -70,6 +102,48 @@ client.on('message', async message => {
 
   if (message.content.toLowerCase() == '!reglas' && message.author.id === '119917959463436290') {
     message.channel.send("No hagas mamadas o te kickeamos. 🥰");
+  }
+
+  if (message.content.includes('!twitch') && message.author.id === '119917959463436290') {
+    let user = message.content.split(' ')[1];
+    let status = await Twitch.checkStream(user);
+
+    if(status) {
+      message.channel.send(`¡${user} sí está en stream! https://www.twitch.tv/${user}`);
+    } else {
+      message.channel.send(`${user} no está en stream. :(`);
+    }
+  }
+
+  if (message.content.includes('!google') && message.author.id === '119917959463436290') {
+    let search = message.content.split(' ');
+    search = search.splice(1, search.length);
+    search = search.join("+");
+    message.channel.send(`https://www.google.com/search?q=${search}`);
+  }
+
+  if ((message.content.includes('!yt') || message.content.includes('!youtube')) && message.author.id === '119917959463436290') {
+    let search = message.content.split(' ');
+    search = search.splice(1, search.length);
+    search = search.join("+");
+    message.channel.send(`https://www.youtube.com/results?search_query=${search}`);
+  }
+
+  if (message.content.includes('!oraculo') && message.author.id === '119917959463436290') {
+    let oracleResponses = [
+      "Sí.",
+      "No.",
+      "Tal vez.",
+      "No sé, pero chinga tu madre. 🙂👍",
+      "Siéntate papito. 🤡",
+      "Duérmete otro rato, mejor. 😘",
+      `Son chorizos. ${message.guild.emojis.find(emoji => emoji.name === "chorizos")}`,
+      "Pregúntame mañana mejor.",
+      `Afirmativo. ${message.guild.emojis.find(emoji => emoji.name === "hyped02")}`,
+      "No sé, pero confío en ti. 😚"
+    ];
+
+    message.channel.send(oracleResponses[Math.floor(Math.random()*oracleResponses.length)])
   }
 });
 
