@@ -104,7 +104,7 @@ client.on('message', async message => {
     message.channel.send("No hagas mamadas o te kickeamos. 🥰");
   }
 
-  if (message.content.includes('!twitch') && message.author.id === '119917959463436290') {
+  if (message.content.includes('!twitch')) {
     let user = message.content.split(' ')[1];
     let status = await Twitch.checkStream(user);
 
@@ -115,21 +115,21 @@ client.on('message', async message => {
     }
   }
 
-  if (message.content.includes('!google') && message.author.id === '119917959463436290') {
+  if (message.content.includes('!google')) {
     let search = message.content.split(' ');
     search = search.splice(1, search.length);
     search = search.join("+");
     message.channel.send(`https://www.google.com/search?q=${search}`);
   }
 
-  if ((message.content.includes('!yt') || message.content.includes('!youtube')) && message.author.id === '119917959463436290') {
+  if ((message.content.includes('!yt') || message.content.includes('!youtube'))) {
     let search = message.content.split(' ');
     search = search.splice(1, search.length);
     search = search.join("+");
     message.channel.send(`https://www.youtube.com/results?search_query=${search}`);
   }
 
-  if (message.content.includes('!oraculo') && message.author.id === '119917959463436290') {
+  if (message.content.includes('!oraculo')) {
     let oracleResponses = [
       "Sí.",
       "No.",
