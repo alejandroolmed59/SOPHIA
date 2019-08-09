@@ -9,8 +9,9 @@ client.on('ready', async () => {
   console.log('Estoy lista.');
 
   let sendMessage = true;
-  const time = 25 * 6000;
+  const time = 25 * 60000;
   const channel = client.channels.find(ch => ch.name === '🦜-cotorreo');
+  let sendMessageRucas = true;
 
   setInterval(async () => {
     let streamStatus = await Twitch.checkStream('JuggerWicho115');
@@ -26,18 +27,16 @@ client.on('ready', async () => {
   
   setInterval(() => {
     let fecha = new Date;
-    let sendMessage = true;
     const channel = client.channels.find(ch => ch.name === '🦜-cotorreo');
-    
     if (fecha.getDay() == 6 && sendMessage == false) {
-      sendMessage = true;
+      sendMessageRucas = true;
     }
 
     if (fecha.getDay() == 5 && sendMessage == true) {
       channel.send(`@everyone ¡YA ES VIERNES DE AHORCAR RUCAS, MORROS! ${client.emojis.find(emoji => emoji.name === "spooky")}`);
-      sendMessage = false;
+      sendMessageRucas = false;
     }
-  }, 6000);
+  }, 60000);
 });
 
 client.on('guildMemberAdd', member => {
