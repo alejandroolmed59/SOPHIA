@@ -28,11 +28,11 @@ client.on('ready', async () => {
   setInterval(() => {
     let fecha = new Date;
     const channel = client.channels.find(ch => ch.name === '🦜-cotorreo');
-    if (fecha.getDay() == 6 && sendMessage == false) {
+    if (fecha.getDay() == 6 && sendMessageRucas == false) {
       sendMessageRucas = true;
     }
 
-    if (fecha.getDay() == 5 && sendMessage == true) {
+    if (fecha.getDay() == 5 && sendMessageRucas == true) {
       channel.send(`@everyone ¡YA ES VIERNES DE AHORCAR RUCAS, MORROS! ${client.emojis.find(emoji => emoji.name === "spooky")}`);
       sendMessageRucas = false;
     }
